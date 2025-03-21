@@ -6,6 +6,9 @@ Test finetuning LLMs with private dataset
 
 ## To Do List
 
+- [ ] Domain Knowledge Finetuning
+- [ ] Downstream Task Learning
+
 ## Install and run
 
 ### Set up
