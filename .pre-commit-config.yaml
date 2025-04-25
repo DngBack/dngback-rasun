@@ -32,8 +32,3 @@ repos:
     hooks:
       - id: autopep8
         exclude: ^migration/|^scripts/utils/|^tests/|.*/__init__.py
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0
-    hooks:
-      - id: flake8
-        exclude: ^scripts/utils/|^tests/|.*/__init__.py

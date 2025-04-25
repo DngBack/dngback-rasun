@@ -1,6 +1,8 @@
 dotenv==0.9.9
+fugashi==1.2.1
 llama-parse>=0.0.40
 nest-asyncio==1.2.0
+nltk==3.8.1
 openai>=1.12.0
 pandas>=2.2.0
 pathlib>=1.0.1
