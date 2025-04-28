@@ -16,7 +16,7 @@ tokenizer = model_manager.get_tokenizer()
 
 # Get data
 dataset = data_process.process(
-    file_path='dataset/sample/evaluated_Data250421_Full.csv',
+    file_path='dataset/sample/train_data.csv',
     mode='with_context',
     tokenizer=tokenizer,
 )

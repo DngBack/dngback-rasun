@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from trl import SFTConfig
+from transformers import TrainingArguments
 from trl import SFTTrainer
 from unsloth import is_bfloat16_supported
 
@@ -35,7 +35,7 @@ class SFTJudge:
             max_seq_length=max_seq_length,
             dataset_num_proc=2,
             packing=False,  # Can make training 5x faster for short sequences.
-            args=SFTConfig(
+            args=TrainingArguments(
                 per_device_train_batch_size=per_device_train_batch_size,
                 gradient_accumulation_steps=gradient_accumulation_steps,
                 warmup_steps=warmup_steps,
