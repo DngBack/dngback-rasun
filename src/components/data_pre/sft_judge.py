@@ -33,6 +33,9 @@ class SFTJudge(BaseDataModule):
             batched=True,
             fn_kwargs={'mode': mode, 'tokenizer': tokenizer},
         )
+        dataset = dataset.remove_columns(
+            [col for col in dataset.column_names if col != 'text'],
+        )
         return dataset
 
     def get_data(self, file_path: Optional[str] = None) -> Dataset:

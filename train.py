@@ -31,3 +31,6 @@ trainer_module.set_trainer(
     gradient_accumulation_steps=4,
     warmup_steps=5,
 )
+
+# Train
+trainer_module.train()

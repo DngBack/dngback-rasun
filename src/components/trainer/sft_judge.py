@@ -35,7 +35,7 @@ class SFTJudge:
             max_seq_length=max_seq_length,
             dataset_num_proc=2,
             packing=False,  # Can make training 5x faster for short sequences.
-            args=TrainingArguments(
+            args=TrainingArguments(  # type: ignore
                 per_device_train_batch_size=per_device_train_batch_size,
                 gradient_accumulation_steps=gradient_accumulation_steps,
                 warmup_steps=warmup_steps,
