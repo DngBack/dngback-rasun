@@ -69,7 +69,7 @@ class SFTJudge(BaseDataModule):
         self,
         examples: dict,
         mode: str = 'with_context',
-        tokenizer: AutoTokenizer = None,
+        tokenizer: Optional[AutoTokenizer] = None,
     ) -> dict:
         instructions = examples['instruction']
         inputs = examples['input']
@@ -79,7 +79,10 @@ class SFTJudge(BaseDataModule):
         if mode == 'with_context':
             PROMPT = self.prompt_with_context
             for instruction, input_text, output, label in zip(
-                instructions, inputs, outputs, labels,
+                instructions,
+                inputs,
+                outputs,
+                labels,
             ):
                 text = (
                     PROMPT.format(
@@ -94,7 +97,10 @@ class SFTJudge(BaseDataModule):
         else:
             PROMPT = self.prompt_without_context
             for instruction, input_text, output, label in zip(
-                instructions, inputs, outputs, labels,
+                instructions,
+                inputs,
+                outputs,
+                labels,
             ):
                 text = (
                     PROMPT.format(

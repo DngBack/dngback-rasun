@@ -1,77 +1,105 @@
-# SunBot Fine-tuning Pipeline
+# Training Pipeline
 
-Pipeline để fine-tuning mô hình ngôn ngữ lớn (LLM) dựa trên SunBot.
+This repository contains a training pipeline for fine-tuning language models using the Unsloth framework.
 
-## Cài đặt
+## Setup
+
+1. Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Cấu trúc thư mục
-
-```
-.
-├── README.md
-├── requirements.txt
-├── src/
-│   ├── __init__.py
-│   ├── data/
-│   │   ├── __init__.py
-│   │   └── data_processor.py
-│   ├── model/
-│   │   ├── __init__.py
-│   │   └── model_utils.py
-│   ├── training/
-│   │   ├── __init__.py
-│   │   └── trainer.py
-│   └── utils/
-│       ├── __init__.py
-│       └── logging.py
-└── main.py
-```
-
-## Sử dụng
-
-### 1. Chuẩn bị dữ liệu
+2. Install Guild AI:
 
 ```bash
-python main.py prepare-data --input_path path/to/raw/data --output_path path/to/processed/data
+pip install guildai
 ```
 
-### 2. Fine-tuning
+## Training with Guild
+
+Guild AI is used for experiment tracking and hyperparameter optimization. Here's how to use it:
+
+1. Initialize Guild in your project:
 
 ```bash
-python main.py train \
-    --model_name_or_path path/to/base/model \
-    --data_path path/to/processed/data \
-    --output_dir path/to/save/model \
-    --num_train_epochs 3 \
-    --per_device_train_batch_size 4 \
-    --learning_rate 2e-5 \
-    --max_seq_length 512
+guild init
 ```
 
-### 3. Đánh giá
+2. Run the training pipeline with default parameters:
 
 ```bash
-python main.py evaluate \
-    --model_path path/to/finetuned/model \
-    --test_data_path path/to/test/data
+guild run src/pipeline/train.py
 ```
 
-## Các tham số chính
+3. Run with custom hyperparameters:
 
-- `--model_name_or_path`: Đường dẫn đến mô hình cơ sở
-- `--data_path`: Đường dẫn đến dữ liệu đã xử lý
-- `--output_dir`: Thư mục lưu mô hình đã fine-tune
-- `--num_train_epochs`: Số epoch huấn luyện
-- `--per_device_train_batch_size`: Batch size cho mỗi device
-- `--learning_rate`: Learning rate
-- `--max_seq_length`: Độ dài tối đa của sequence
+```bash
+guild run src/pipeline/train.py \
+    num_epochs=5 \
+    batch_size=8 \
+    learning_rate=1e-4
+```
 
-## Lưu ý
+4. View training runs:
 
-- Đảm bảo có đủ GPU memory cho việc fine-tuning
-- Sử dụng wandb để theo dõi quá trình huấn luyện
-- Có thể điều chỉnh các hyperparameter trong file config
+```bash
+guild runs
+```
+
+5. Compare different runs:
+
+```bash
+guild compare
+```
+
+## Hyperparameter Optimization
+
+To perform hyperparameter optimization:
+
+1. Create a hyperparameter search configuration:
+
+```bash
+guild run src/pipeline/train.py \
+    --optimizer random \
+    --max-trials 10 \
+    --objective minimize loss \
+    num_epochs=[3,5,7] \
+    batch_size=[4,8,16] \
+    learning_rate=[1e-4,2e-4,5e-4]
+```
+
+2. Monitor the optimization progress:
+
+```bash
+guild runs
+```
+
+## Data
+
+The training data is located at:
+
+- `dataset/sample/evaluated_Data250421_Full.csv`
+
+## Model Output
+
+Trained models are saved to:
+
+- `outputs/trained_model/`
+
+## Requirements
+
+- Python 3.8+
+- PyTorch
+- Transformers
+- Unsloth
+- Guild AI
+- Pandas
+- Datasets
+
+## Notes
+
+- The training script uses the Qwen1.5-7B-Chat model by default
+- Training is performed using 4-bit quantization for memory efficiency
+- The maximum sequence length is set to 2048 tokens
+- Default training parameters can be modified in the script or through Guild commands
