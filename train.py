@@ -34,3 +34,9 @@ trainer_module.set_trainer(
 
 # Train
 trainer_module.train()
+
+# Save Model
+trainer_module.save_model(path='rasun_v1/')
+
+# push to hub
+# trainer_module.push_to_hub(repo_id="rasun-v1", commit_message="End of training")
